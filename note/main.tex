@@ -1,0 +1,40 @@
+% !TeX TS-program = xelatex
+\documentclass[a5paper,12pt]{article}
+\usepackage{my-windows-math}
+\title{数理统计}
+\author{ImageNature}
+\date{\today}
+\begin{document}
+\maketitle
+
+
+抛开实际背景，总体就是一堆有大有小的数，因此用一个概率分布去描述和归纳总体是恰当的.
+某种意义上来说，总体就是一个分布，它的数量指标就是服从分布的随机变量.
+因此从总体中抽样和从某分布中抽样是同一个意思.
+\section{绪论}
+
+\begin{enumerate}
+  \item 若将样本观测值有小到大进行排列，记作 $X_{(1)},\cdots,X_{(n)}$ ,则称为有序样本，且可以用有序样本定义经验分布函数. 有序样本对应的是次序统计量.
+  \item 统计量是一类函数，统计量的分布称为抽样分布. 尽管统计量不依赖于未知参数，但是它的分布是依赖于未知参数的.
+  \item 设 $x_1,\cdots,x_n$ 是来自某个总体的样本，$\overline{x}$ 是样本均值
+  \begin{itemize}
+    \item 若总体分布是 $N(\mu,\sigma^2)$，则 $\overline{x}$ 的精确分布为 $N(\mu,\sigma^2/n)$
+    \item 若总体分布不是正态分布或未知，$E(x) = \mu,Var(x) = \sigma^2$ 存在，
+    则当 $n$ 较大时 $\overline{x}$ 的极限分布(渐进分布) 为 $N(\mu,\sigma^2/n)$ .这里渐进分布是 $n$ 较大时的近似分布.
+  \end{itemize}
+ \item 样本方差时度量样本散布大小的统计量，样本方差定义为
+ \[
+ s_n^2 = \frac1 n \sum_{i=1}^{n} (x_i - \overline{x})^2
+ \]
+ 为了更方便地构造无偏统计量，一般会定义为
+ \[
+ s^2 = \frac{1}{n-1}\sum_{i=1}^{n}(x_i - \overline{x})^2
+ \]
+ 在定义中， $n$ 为样本量， $n-1$ 称为偏差平方和的自由度. 含义是：
+ 在 $\overline{x}$ 确定后， $n$ 个偏差 $x_1 - \overline{x},\cdots,x_n - \overline{x}$ 只有
+ $n-1$ 个偏差可以自由变动，因为其和为 $0$.
+\end{enumerate}
+
+
+
+\end{document}
