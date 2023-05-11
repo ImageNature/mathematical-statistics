@@ -16,6 +16,8 @@
 \begin{enumerate}
   \item 若将样本观测值有小到大进行排列，记作 $X_{(1)},\cdots,X_{(n)}$ ,则称为有序样本，且可以用有序样本定义经验分布函数. 有序样本对应的是次序统计量.
   \item 统计量是一类函数，统计量的分布称为抽样分布. 尽管统计量不依赖于未知参数，但是它的分布是依赖于未知参数的.
+    \item 尽管统计量不依赖于未知参数，但是它的分布是依赖于未知参数的.
+  \item 注意不同定义下的样本方差的表示，$s$ 有没有 下指标 $n$ ,  $s^2$ 更加常用.
   \item 设 $x_1,\cdots,x_n$ 是来自某个总体的样本，$\overline{x}$ 是样本均值
   \begin{itemize}
     \item 若总体分布是 $N(\mu,\sigma^2)$，则 $\overline{x}$ 的精确分布为 $N(\mu,\sigma^2/n)$
@@ -33,8 +35,127 @@
  在定义中， $n$ 为样本量， $n-1$ 称为偏差平方和的自由度. 含义是：
  在 $\overline{x}$ 确定后， $n$ 个偏差 $x_1 - \overline{x},\cdots,x_n - \overline{x}$ 只有
  $n-1$ 个偏差可以自由变动，因为其和为 $0$.
+
+
+
+
+  \item 样本偏度和样本峰度都是中心矩的函数，如果数据完全对称，那么样本偏度就是 $0$
+  \begin{itemize}
+    \item 样本偏度大于 $0$ ，表示样本的右尾长，即样本中有几个很大的数.
+    \item 样本偏度小于 $0$ ，表示样本的左尾长，即样本中有几个很小的数.
+    \item 样本峰度大于 $0$ ，分布曲线在峰值附近比正态分布更陡峭，尾部更细——尖顶型.
+    \item 样本峰度小于 $0$ , 分布曲线在峰值附近比正态分布更平坦，尾部更粗——平顶型.
+  \end{itemize}
+  \item 在同一样本中，$x_1,\cdots,x_n$ 是独立同分布的, 但是次序统计量 $x_{1},\cdots,x_{n}$ 并不独立，分布也不相同.
+  \item 设总体密度函数为 $p(x)$, $x_p$ 为其 $p$ 分位数， $p(x)$ 在 $x_p$
+  处连续且  $p(x_p)>0$，那么当  $n\to \infty$ 时，样本的 $p$ 分位数 $m_p$
+  的渐进分布为
+  \[
+  m_p \sim N\left( x_p, \frac{p(1-p)}{np^2(x_p)}\right)
+  \]
 \end{enumerate}
 
+
+
+\section{三大抽样分布}
+许多统计推断是基于正态分布的假设，因此有必要了解以标准正态分布为基础构造的三个常用的分布.
+
+\subsection{$\mathcal{X}^2$ 方分布}
+设 $X_1,\cdots,X_n$ i.i.d. 于标准正态分布  $N(0,1)$, 则有自由度为 $n$ 的 $\mathcal{X}^2$ 分布
+\[
+\mathcal{X}^2 = \mathcal{X}_1^2+ \cdots +\mathcal{X}_n^2
+\]
+记为 $\mathcal{X}^2 \sim \mathcal{X}(n)$.
+
+\begin{enumerate}
+  \item 卡方分布与伽玛分布的关系
+  \[
+  \mathcal{X}^2(n) = Ga(\frac{n}{2}), \frac{1}{2}
+  \]
+  期望为 $n$ ，方差为 $2n$.
+  \item 卡方分布一个重要的定理是: 设 $x_1,\cdots,x_n$ 来自正态分布 $N(\mu,\sigma^2)$ 的样本，其样本均值和样本方差分别为
+  \[
+  \begin{aligned}
+    \overline{x} &= \frac1n \sum_{i=1}^{n} x_i \\
+    s^2 &= \frac{1}{n-1} \sum_{i=1}^{n} (x_i - \overline{x})^2
+  \end{aligned}
+  \]
+  则有
+  \begin{itemize}
+    \item $\overline{x}$ 与  $s^2$ 相互独立.
+    \item $\overline{x} \sim N(\mu,\sigma^2/n)$.
+    \item $\frac{(n-1)s^2}{\sigma^2} \sim \mathcal{X}^2(n-1)$
+  \end{itemize}
+
+  \item $\mathcal{X}^2$ 的定义是$\mathcal{X}^2 = X_1^2+\cdots+X_n^2$ 的分布，
+  其中 $X_i$ 是i.i.d.的标准正态分布 $N(0,1)$. 设想一个 $n$  维向量$(X_1,\cdots,X_n)$，从原点到它的长度的平方就是 $\mathcal{X}^2$.
+  所以，卡方的物理含义是刻画了一个 $n$  维向量的长度的平方的分布，
+  这个向量的每个维度都是按标准正态随机生成的.
+
+  \item 举个机器学习的例子，假设样本特征有n维，并且样本抽取满足一个多元正态分布（事实上每个维度都是独立的），那么这个样本向量的长度平方的期望是 $n$ ，因为 $E(\mathcal{X}^2)=n$.
+  \item  再举一个高维球的例子，在 $n$  维里随机抽取这么一个向量，落在半径为 $1$  的高维球里的概率，
+  随着 $n$  变大而越来越小，因为 $\mathcal{X}^2$ 的 p.d.f. 整体右移了，$P(\mathcal{X}^2<1)$越来越小
+
+\end{enumerate}
+
+
+\subsection{ $F$ 分布}
+设随机变量 $X_1 \sim \mathcal{X}^2(m), X_2\sim \mathcal{X}^2(n)$, $X_1$ 与  $X_2$ 独立，则有自由度为 $m$ 和 $n$ 的 $F$ 分布
+\[
+F = \frac{X_1/m}{X_2/n}
+\]
+记作  $F \sim F(m,n)$ ,其中  $m$ 为分子自由度， $n$ 为分母自由度.
+
+\begin{enumerate}
+  \item 推论：设 $x_1,\cdots,x_m$ 是来自 $N(\mu_1,\sigma_1^2)$ 的样本，
+  $y_1,\cdots,y_n$ 是来自 $N(\mu_2,\sigma_2^2)$ 的样本，且两样本相互独立
+  记
+  \[
+  s_x^2 = \frac{1}{m-1} \sum_{i=1}^{m}(x_i - \overline{x})^2, \,
+  s_y^2 = \frac{1}{n-1} \sum_{i=1}^{n}(x_i - \overline{x})^2,
+  \]
+  其中
+  \[
+  \overline{x} = 1/m\sum_{i=1}^{m}x_i, \,
+  \overline{y} = 1/n\sum_{i=1}^{n}y_i
+  \]
+  则有
+  \[
+  F =  \frac{s_x^2 /\sigma_1^2}{ s_y^2/\sigma_2^2} \sim F(m-1,n-1)
+  \]
+  特别的，若 $\sigma_1^2 = \sigma_2^2$, 则有
+  \[
+  F=\frac{s_x^2}{s_y^2} \sim F(m-1,n-1)
+  \]
+\end{enumerate}
+
+
+\subsection{ $t$ 分布}
+设随机变量  $X_1$ 与  $X_2$ 独立且  $X_1 \sim N(0,1), X_2 \sim \mathcal{X}^2(n)$, 则有自由度为 $n$ 的 $t$ 分布
+\[
+t = \frac{X_1}{(X_2/N)^{1/2}}
+\]
+记作  $t \sim t(n)$
+\begin{enumerate}
+  \item  $t$ 分布的密度函数的图像是一个关于纵轴对称的分布，与标准正态分布的密度函数形状类似，只是它的峰比标准正态分布低一点，尾部的概率比标准正态分布大一些.
+  \begin{itemize}
+    \item 自由度为 $1$ 的 $t$ 分布就是标准柯西分布，其均值不存在.
+    \item  $n>1$ 时， $t$ 分布的数学期望存在且为 $0$.
+    \item  $n>2$ 时， $t$ 分布的方差常年在且为 $n/(n-2)$.
+    \item  当自由度较大时， $t$ 分布可以用  $N(0,1)$ 近似.
+  \end{itemize}
+  \item 推论：设  $x_1,\cdots,x_n$ 是来自正态分布  $N(\mu,\sigma^2)$ 的一个样本，$\overline{x}$ 与 $s^2$ 分别是该样本的样本均值和样本方差，则有
+  \[
+  t = \frac{n^{1/2} (\overline{x} - \mu)}{s} \sim t(n-1)
+  \]
+\end{enumerate}
+
+
+
+\section{充分统计量}
+统计上将样本进行加工不损失信息称为充分性. 当给定了一个统计量的值后，
+也就知道了样本中关于参数的所有信息，剩下的其它信息就没有什么价值了，
+这正是统计量具有充分性的含义.
 
 
 \end{document}
